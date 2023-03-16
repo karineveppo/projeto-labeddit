@@ -45,3 +45,9 @@ export interface likes_dislikes_commentDB {
     comment_id: string,
     like_comment: number
 }
+
+export interface TokenPayLoad {
+    id: string,
+    name: string,
+    role: ROLE_USERS
+}
