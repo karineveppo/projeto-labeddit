@@ -40,6 +40,49 @@ export interface CommentDB {
     post_id: string
 }
 
+export interface CommentsWhithCreatorDB {
+    id: string,
+    content: string,
+    likes: number,
+    dislikes: number,
+    created_at: string,
+    updated_at: string,
+    post_is: string,
+    creator: {
+        creator_id: string,
+        nickname: string
+    }
+}
+
+export interface PostByUsersDB {
+    id: string,
+    content: string,
+    comments: number,
+    likes: number,
+    dislikes: number,
+    created_at: string,
+    updated_at: string,
+    creator: {
+        id: string,
+        nickname: string
+    }
+}
+
+export interface PostWithCommentsDB {
+    id: string,
+    content: string,
+    comments: string,
+    likes: number,
+    dislikes: number,
+    created_at: string,
+    updated_at: string,
+    creator: {
+        id: string,
+        nickname: string
+    },
+    comments_post: CommentsWhithCreatorDB,
+}
+
 export interface likes_dislikes_commentDB {
     user_id: string,
     comment_id: string,
@@ -48,6 +91,6 @@ export interface likes_dislikes_commentDB {
 
 export interface TokenPayLoad {
     id: string,
-    name: string,
+    nickname: string,
     role: ROLE_USERS
 }
