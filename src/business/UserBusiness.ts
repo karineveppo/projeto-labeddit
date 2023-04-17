@@ -1,7 +1,7 @@
 import { UserDatabase } from '../database/UserDatabase'
 import { User } from '../models/User'
 import { TokenPayLoad, ROLE_USERS, UserDB } from '../types'
-import { SignupDTO, LoginDTO,GetAllUsersInputDTO } from '../dtos/UserDTO'
+import { SignUpDTO, LoginDTO, GetAllUsersInputDTO } from '../dtos/UserDTO'
 import { HashManager } from '../services/HashManager'
 import { BadRequestError } from '../errors/BadRequestError'
 import { NotFoundError } from '../errors/NotFoundError'
@@ -52,7 +52,7 @@ export class UserBusiness {
         return users
     }
 
-    public async signup(input: SignupDTO) {
+    public async signup(input: SignUpDTO) {
         const { nickname, email, password } = input
 
         const id = this.idGenerator.generate()
@@ -64,7 +64,7 @@ export class UserBusiness {
         const filterUserByEmail = await this.userDatabase.getUserByEmail(email)
 
         if(filterUserByEmail) {
-            throw new BadRequestError("'Email já cadastrado!")
+            throw new BadRequestError("'Email' já cadastrado!")
         }
 
         if(typeof nickname !== "string") {
@@ -98,7 +98,7 @@ export class UserBusiness {
 
         const newUserDB = newUser.toDBModel()
         
-        await this.userDatabase.signup(newUserDB)
+        await this.userDatabase.signUp(newUserDB)
 
         const output = {
             message: "Usuário cadastrado com sucesso!",
@@ -118,16 +118,22 @@ export class UserBusiness {
             throw new BadRequestError("O 'password' está incorreto!")
         }
 
+        const searchUserByLogin = await this.userDatabase.getUserByEmail(email)
+
+        if(!searchUserByLogin){
+            throw new NotFoundError("'E-mail' não cadastrado!")
+        }
+
         const passwordHash = await this.hashManager.compare (password, searchUserByLogin.password)
         
         if(!passwordHash) {
-            console.log("conta", searcheUserByLigin.password)
+            console.log("conta", searchUserByLogin.password)
             console.log("senha", password)
             console.log("Hash", passwordHash)
             throw new BadRequestError("O 'email' e/ou a 'senha' estão incorretos!")
         }
 
-        if(searcheUserByLogin) {
+        if(searchUserByLogin) {
 
             const userLogin = new User (
                 searchUserByLogin.id,
@@ -138,7 +144,7 @@ export class UserBusiness {
                 searchUserByLogin.created_at
             )
 
-            const tokenPayload: TokenPayload = {
+            const tokenPayload: TokenPayLoad = {
                 id: userLogin.getId(),
                 nickname: userLogin.getNickname(),
                 role: userLogin.getRole()

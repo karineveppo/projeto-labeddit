@@ -9,24 +9,24 @@ export interface UserDB {
     email: string,
     password: string,
     role:ROLE_USERS,
-    created_at: string
+    created_at: string,
 }
 
 export interface PostDB {
     id: string,
     creator_id: string,
     content: string,
+    comments: number,
     likes: number,
     dislikes: number,
-    comments: number,
     created_at: string,
-    updated_at: string
+    updated_at: string,
 }
 
 export interface likes_dislikes_PostDB {
     user_id: string,
     post_id: string,
-    like: number
+    like: number,
 }
 
 export interface CommentDB {
@@ -37,7 +37,7 @@ export interface CommentDB {
     dislikes: number
     created_at: string,
     updated_at: string,
-    post_id: string
+    post_id: string,
 }
 
 export interface CommentsWhithCreatorDB {
@@ -47,10 +47,10 @@ export interface CommentsWhithCreatorDB {
     dislikes: number,
     created_at: string,
     updated_at: string,
-    post_is: string,
+    post_id: string,
     creator: {
         creator_id: string,
-        nickname: string
+        nickname: string,
     }
 }
 
@@ -64,21 +64,21 @@ export interface PostByUsersDB {
     updated_at: string,
     creator: {
         id: string,
-        nickname: string
+        nickname: string,
     }
 }
 
 export interface PostWithCommentsDB {
     id: string,
     content: string,
-    comments: string,
+    comments: number,
     likes: number,
     dislikes: number,
     created_at: string,
     updated_at: string,
     creator: {
         id: string,
-        nickname: string
+        nickname: string,
     },
     comments_post: CommentsWhithCreatorDB,
 }
@@ -86,7 +86,7 @@ export interface PostWithCommentsDB {
 export interface likes_dislikes_commentDB {
     user_id: string,
     comment_id: string,
-    like_comment: number
+    like: number,
 }
 
 export interface TokenPayLoad {

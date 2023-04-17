@@ -3,7 +3,7 @@ export interface GetAllUsersInputDTO {
     token: string
 }
 
-export interface SignupDTO {
+export interface SignUpDTO {
     nickname: string,
     email: string,
     password: string
@@ -23,8 +23,8 @@ export class UserDTO {
         return result
     }
 
-    signup = (nickname: string, email: string, password: string): SignupDTO => {
-        const result: SignupDTO = {
+    signup = (nickname: string, email: string, password: string): SignUpDTO => {
+        const result: SignUpDTO = {
             nickname,
             email,
             password

@@ -13,9 +13,9 @@ CREATE TABLE posts (
     id TEXT PRIMARY KEY UNIQUE NOT NULL,
     creator_id TEXT NOT NULL,
     content TEXT NOT NULL,
+    comments INTEGER DEFAULT(0) NOT NULL,
     likes INTEGER DEFAULT(0) NOT NULL,
     dislikes INTEGER DEFAULT(0) NOT NULL,
-    comments INTEGER DEFAULT(0) NOT NULL,
     created_at TEXT DEFAULT(DATETIME()) NOT NULL,
     updated_at TEXT DEFAULT(DATETIME()) NOT NULL,
     FOREIGN KEY (creator_id) REFERENCES users (id)
@@ -43,7 +43,7 @@ CREATE TABLE likes_dislikes_posts (
 );
 
 CREATE TABLE likes_dislikes_comments (
-    user_id BIGINT TEXT NOT NULL,
+    user_id TEXT NOT NULL,
     comment_id TEXT NOT NULL,
     like INTEGER NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users (id),
@@ -90,6 +90,21 @@ INSERT INTO likes_dislikes_comments (user_id, comment_id, like)
         ("u003", "c001", 1),
         ("u004", "c003", 1);
 
+UPDATE users
+SET role = "ADMIN"
+WHERE ID = "";
+
+SELECT comments.id, 
+comments.content,
+comments.likes,
+comments.dislikes,
+comments.created_at,
+comments.updated_at,
+users.id,
+users.nickname
+FROM comments LEFT JOIN users
+ON users.id = comments.creator_id;
+
 SELECT * FROM users;
 
 SELECT * FROM posts;
@@ -99,6 +114,10 @@ SELECT * FROM comments;
 SELECT * FROM likes_dislikes_posts;
 
 SELECT * FROM likes_dislikes_comments;
+
+DROP TABLE users;
+
+
 
 
 
