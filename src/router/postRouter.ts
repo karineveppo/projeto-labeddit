@@ -20,7 +20,6 @@ const postController = new PostController(
 
 postRouter.get("/", postController.getAllPosts)
 postRouter.get("/:id", postController.getPostsById)
-//postRouter.get("/:nickname", postController.getPostByNickname)
 postRouter.post("/", postController.insertNewPost)
 postRouter.post("/:id", postController.insertNewComment)
 postRouter.put("/:id", postController.updatePost)
